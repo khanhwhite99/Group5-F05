@@ -8,11 +8,13 @@ public class Menu {
     public Menu () {
         AppBl = new ApplicationBL ();
         UserBl = new UserBL ();
+        PaymentBl = new PaymentBL();
         BillBl = new BillBL ();
         existProgram = false;
     }
     ApplicationBL AppBl;
     UserBL UserBl;
+    PaymentBL PaymentBl;
     BillBL BillBl;
     bool existProgram;
     public void MainMenu () {
@@ -201,19 +203,61 @@ public class Menu {
         while(true)
         {
             bool isExit = false;
+            int ichoice;
             Console.Clear();
             Console.WriteLine("===Buy Application===");
             Console.WriteLine ($"Application Name : {app.Name}");
-            Console.WriteLine($"Pay:              : {app.Price} VND");
+            Console.WriteLine ($"Pay:             : {app.Price} VND");
             Console.WriteLine("Payment Method:\n");
-            //show list payment..
+            userOnline.ListPayment = PaymentBl.GetPayments(userOnline.User_ID);
+            for(int i = 0; i < userOnline.ListPayment.Count; i++)
+            {
+                int p = i + 1;
+                Console.WriteLine(p + ". " + userOnline.ListPayment[i].Name);
+            }
 
             Console.WriteLine("0. Return");
             Console.Write("#Choice: ");
-            string choice = Console.ReadLine();
-            if(choice == "0")
+            string schoice = Console.ReadLine();
+            if(schoice == "0")
                 isExit = true;
-            //check choice payment...
+            else if(int.TryParse(schoice, out ichoice))
+            {
+                if(ichoice >= 1 && ichoice <= userOnline.ListPayment.Count)
+                {
+                    Console.Clear();
+                    Console.Write("We are checkking payment account...");
+                    if(userOnline.ListPayment[ichoice-1].Name == "By Store")
+                    {
+                        if(PaymentBl.CheckPayment(userOnline.ListPayment[ichoice-1], app.Price))
+                        {
+                            Bill bill = new Bill()
+                            {
+                                App = app,
+                                User = userOnline,
+                                UnitPrice = app.Price
+                            };
+                            bool checkCreate = BillBl.CreateBill(bill);
+                            if(checkCreate)
+                            {
+                                Console.WriteLine($"Buy {app.Name} !\nSuccessful\n\nPress anykey to return...");
+                                Console.ReadKey();
+                                isExit = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not Successful\n\nPress anykey to return...");
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not Successful\n\nPress anykey to return...");
+                            Console.ReadKey();
+                        }
+                    }
+                }
+            }
 
             if(isExit == true)break;
         }

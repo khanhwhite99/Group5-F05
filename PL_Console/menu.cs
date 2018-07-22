@@ -179,6 +179,7 @@ public class Menu {
     void DisplayAnApp (Application app) {
         while (true) {
             bool isExit = false;
+            bool isOwn = false;
             Console.Clear ();
             Console.WriteLine ($"Application Name : {app.Name}");
             Console.WriteLine ($"Kind             : {app.Kind}");
@@ -187,10 +188,18 @@ public class Menu {
             Console.WriteLine ($"DatePublish      : {app.DatePublisher.Day+'/'+app.DatePublisher.Month+'/'+app.DatePublisher.Year}");
             Console.WriteLine ($"Price            : {app.Price} VND");
             Console.WriteLine ($"Size             : {app.Size} MB");
-            if()
-            Console.Write ("\n1. Buy\n0. Return\n\n#Choice: ");
+            if(UserBl.GetApplicationBoughtByUserID(userOnline.User_ID).Contains(app))
+            {
+                Console.WriteLine("\nThis Application has OWNER!");
+                isOwn = true;
+            }
+            else
+            {
+                Console.WriteLine ("\n1. Buy");
+            }
+            Console.Write("0. Return\n\n#Choice: ");
             string choice = Console.ReadLine();
-            if(choice == "1")
+            if(choice == "1" && isOwn == false)
             {
                 BuyApp(app);
             }
@@ -227,11 +236,11 @@ public class Menu {
                 if(ichoice >= 1 && ichoice <= userOnline.ListPayment.Count)
                 {
                     Console.Clear();
-                    Console.Write("We are checkking payment account...");
                     if(userOnline.ListPayment[ichoice-1].Name == "By Store")
                     {
                         if(PaymentBl.CheckPayment(userOnline.ListPayment[ichoice-1], app.Price))
                         {
+                            Console.Write("We are checkking payment account...");
                             Bill bill = new Bill()
                             {
                                 App = app,

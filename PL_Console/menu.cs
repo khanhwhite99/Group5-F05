@@ -187,6 +187,7 @@ public class Menu {
             Console.WriteLine ($"DatePublish      : {app.DatePublisher.Day+'/'+app.DatePublisher.Month+'/'+app.DatePublisher.Year}");
             Console.WriteLine ($"Price            : {app.Price} VND");
             Console.WriteLine ($"Size             : {app.Size} MB");
+            if()
             Console.Write ("\n1. Buy\n0. Return\n\n#Choice: ");
             string choice = Console.ReadLine();
             if(choice == "1")
@@ -237,14 +238,17 @@ public class Menu {
                                 User = userOnline,
                                 UnitPrice = app.Price
                             };
-                            bool checkCreate = BillBl.CreateBill(bill);
-                            if(checkCreate)
+                            try
                             {
-                                Console.WriteLine($"Buy {app.Name} !\nSuccessful\n\nPress anykey to return...");
-                                Console.ReadKey();
-                                isExit = true;
+                                bool checkCreate = BillBl.CreateBill(bill);
+                                if(checkCreate)
+                                {
+                                    Console.WriteLine($"Buy {app.Name} !\nSuccessful\n\nPress anykey to return...");
+                                    Console.ReadKey();
+                                    isExit = true;
+                                }
                             }
-                            else
+                            catch
                             {
                                 Console.WriteLine("Not Successful\n\nPress anykey to return...");
                                 Console.ReadKey();
@@ -255,6 +259,11 @@ public class Menu {
                             Console.WriteLine("Not Successful\n\nPress anykey to return...");
                             Console.ReadKey();
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine("This payment havent been updated!\n\nPress anykey to return...");
+                        Console.ReadKey();
                     }
                 }
             }

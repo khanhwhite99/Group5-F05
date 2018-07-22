@@ -1,11 +1,10 @@
-
 using System.Collections.Generic;
 using Persistence;
 using MySql.Data.MySqlClient;
 
 namespace DAL
 {
-    class PaymentDAL
+    public class PaymentDAL
     {
        static public List<Payment> GetPaymentByUserId(int id)
         {

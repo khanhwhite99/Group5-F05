@@ -30,7 +30,7 @@ namespace DAL
             }
             return result;
         }
-        static bool CheckPayment(Payment payment, double money)
+        public static bool CheckPayment(Payment payment, double money)
         {
             if(payment.ID == 1)
                 return (payment.Money >= money);

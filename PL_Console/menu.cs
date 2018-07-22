@@ -185,7 +185,7 @@ public class Menu {
             Console.WriteLine ($"Kind             : {app.Kind}");
             Console.WriteLine ($"Description      : {app.Description}");
             Console.WriteLine ($"Publisher        : {app.Publisher}");
-            Console.WriteLine ($"DatePublish      : {app.DatePublisher.Day+'/'+app.DatePublisher.Month+'/'+app.DatePublisher.Year}");
+            Console.WriteLine ($"DatePublish      : {app.DatePublisher.Date.Day+"/"+app.DatePublisher.Date.Month+"/"+app.DatePublisher.Date.Year}");
             Console.WriteLine ($"Price            : {app.Price} VND");
             Console.WriteLine ($"Size             : {app.Size} MB");
             if(UserBl.GetApplicationBoughtByUserID(userOnline.User_ID).Contains(app))

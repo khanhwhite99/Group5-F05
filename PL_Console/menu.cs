@@ -252,6 +252,7 @@ public class Menu {
                                 bool checkCreate = BillBl.CreateBill(bill);
                                 if(checkCreate)
                                 {
+                                    Console.Clear();
                                     Console.WriteLine($"Buy {app.Name} !\nSuccessful\n\nPress anykey to return...");
                                     Console.ReadKey();
                                     isExit = true;
@@ -259,18 +260,21 @@ public class Menu {
                             }
                             catch
                             {
+                                Console.Clear();
                                 Console.WriteLine("Not Successful\n\nPress anykey to return...");
                                 Console.ReadKey();
                             }
                         }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("Not Successful\n\nPress anykey to return...");
                             Console.ReadKey();
                         }
                     }
                     else
                     {
+                        Console.Clear();
                         Console.WriteLine("This payment havent been updated!\n\nPress anykey to return...");
                         Console.ReadKey();
                     }

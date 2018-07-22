@@ -72,10 +72,18 @@ public class Menu {
             Console.Write ("Do you want to continue?(Y/N) : ");
             string choice = Console.ReadLine ();
             if (choice == "Y" || choice == "y") {
-                if (UserBl.CheckExistUserAndPass (username, password)) {
-                    userOnline = UserBl.GetUserByUserName(username);
-                    SystemGUI ();
-                } else {
+                try
+                {
+                    if (UserBl.CheckExistUserAndPass (username, password)) {
+                        userOnline = UserBl.GetUserByUserName(username);
+                        SystemGUI ();
+                    } else {
+                        Console.Clear ();
+                        Console.Write ("\nIncorrect Username or password!\n\nPress anykey to countinue...");
+                        Console.ReadKey ();
+                    }
+                }catch
+                {
                     Console.Clear ();
                     Console.Write ("\nIncorrect Username or password!\n\nPress anykey to countinue...");
                     Console.ReadKey ();
@@ -141,7 +149,11 @@ public class Menu {
             }
             if (isExit == true) break;
             Console.Write ("\nSearching...");
-            List<Application> listApp = AppBl.SearchApplicationByName (nameapp);
+            List<Application> listApp = new List<Application>();
+            try
+            {
+                listApp = AppBl.SearchApplicationByName (nameapp);
+            }catch{}
             if (listApp.Count <= 0) {
                 Console.Clear ();
                 Console.WriteLine ("Search Fail!\nNot Found Application...\n");

@@ -45,8 +45,8 @@ namespace DAL
 
                 try
                 {
-                    string query = $@"insert into bill(app_id, user_id, Unitprice)
-                                     values({bill.App.App_ID}, {bill.User.User_ID}, {bill.UnitPrice});";
+                    string query = $@"insert into bill(app_id, user_id, payment_id, Unitprice)
+                                     values({bill.App.App_ID}, {bill.User.User_ID}, {bill.Payment.ID},{bill.UnitPrice});";
                     cmd.CommandText = query;
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -67,7 +67,7 @@ namespace DAL
         static protected Bill GetBill(MySqlDataReader reader)
         {
             Bill result = new Bill();
-            int AppID, UserID;
+            int AppID, UserID, PaymentID;
             result.Bill_ID = reader.GetInt16("bill_Id");
             AppID = reader.GetInt32("App_ID");
             Application app = ApplicationDAL.GetApplicationById(AppID);
@@ -75,6 +75,7 @@ namespace DAL
             UserID = reader.GetInt32("User_ID");
             User user = UserDAL.GetUserById(UserID);
             result.User = user;
+            PaymentID = reader.GetInt32("payment_id");
             result.UnitPrice = reader.GetDouble("UnitPrice");
             result.DateCreate = reader.GetDateTime("DataCreate");
 

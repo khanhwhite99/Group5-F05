@@ -30,6 +30,30 @@ namespace DAL
             }
             return result;
         }
+        public static Payment GetPaymentById(int ID)
+        {
+            Payment result = null;
+            string query = $"select * from Payment where payment_id = {ID};";
+            using(MySqlConnection connection = DbConfiguration.OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                using(MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    
+                    if(reader.Read())
+                    {
+                        result = new Payment()
+                        {
+                            ID = reader.GetInt32("payment_id"),
+                            Name = reader.GetString("name"),
+                            Money = reader.GetDouble("money")
+                        };
+                    }
+                }
+            }
+
+            return result;
+        }
         public static bool CheckPayment(Payment payment, double money)
         {
             if(payment.ID == 1)

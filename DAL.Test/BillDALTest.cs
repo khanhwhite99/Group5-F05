@@ -23,9 +23,9 @@ namespace DAL.Test
             //Pass
             Bill bill = new Bill()
             {
-                App = ApplicationDAL.GetApplicationById(2),
+                App = ApplicationDAL.GetApplicationById(3),
                 User = UserDAL.GetUserById(2),
-                UnitPrice = ApplicationDAL.GetApplicationById(13).Price
+                UnitPrice = ApplicationDAL.GetApplicationById(3).Price
             };
             Assert.True(CreateBill(bill));
 

@@ -297,15 +297,38 @@ public class Menu {
         }
     }
     void DisplayMyApplications () {
-        Console.Clear();
-        Console.WriteLine("=== App Bought ===");
-        List<Application> listApp = UserBl.GetApplicationBoughtByUserID(userOnline.User_ID);
-        foreach(var x in listApp)
+        while(true)
         {
-            Console.WriteLine(x.Name);
+            Console.Clear();
+            Console.WriteLine("=== App Bought ===");
+            List<Application> listApp = UserBl.GetApplicationBoughtByUserID(userOnline.User_ID);
+            int i = 1;
+            foreach(var x in listApp)
+            {
+                Console.WriteLine(i + ". " + x.Name);
+                i++;
+            }
+            Console.Write("0. Return\n\n#Choice : ");
+            string choice = Console.ReadLine();
+            int ichoice;
+            if(int.TryParse(choice, out ichoice))
+            {
+                if(ichoice == 0)break;
+                if(ichoice <= listApp.Count)
+                {
+                    Console.Clear ();
+                    Console.WriteLine ($"Application Name : {listApp[ichoice-1].Name}");
+                    Console.WriteLine ($"Kind             : {listApp[ichoice-1].Kind}");
+                    Console.WriteLine ($"Description      : {listApp[ichoice-1].Description}");
+                    Console.WriteLine ($"Publisher        : {listApp[ichoice-1].Publisher}");
+                    Console.WriteLine ($"DatePublish      : {listApp[ichoice-1].DatePublisher.Date.Day+"/"+listApp[ichoice-1].DatePublisher.Date.Month+"/"+listApp[ichoice-1].DatePublisher.Date.Year}");
+                    Console.WriteLine ($"Price            : {listApp[ichoice-1].Price} VND");
+                    Console.WriteLine ($"Size             : {listApp[ichoice-1].Size} MB");
+                }
+                Console.Write("\nPress anykey to return...");
+                Console.ReadKey();
+            }
         }
-        Console.Write("\nPress anykey to return ...");
-        Console.ReadKey();
     }
     void DisplayHistoryTrade () {
         Console.Clear();

@@ -76,6 +76,7 @@ namespace DAL
             User user = UserDAL.GetUserById(UserID);
             result.User = user;
             PaymentID = reader.GetInt32("payment_id");
+            result.Payment = PaymentDAL.GetPaymentById(PaymentID);
             result.UnitPrice = reader.GetDouble("UnitPrice");
             result.DateCreate = reader.GetDateTime("DataCreate");
 

@@ -132,38 +132,42 @@ public class Menu {
             bool isExit = false;
             string nameapp = "";
             ConsoleKeyInfo key;
+            List<Application> listApp = new List<Application>();
             while (true) {
                 Console.Clear ();
                 Console.WriteLine ("===Search Application===");
                 Console.Write ("Enter Name Application: ");
-                Console.Write (nameapp);
+                Console.WriteLine (nameapp);
+                if(nameapp != "" && nameapp.Trim() != "")
+                {
+                    Console.WriteLine("\n------------------------");
+                    listApp = AppBl.SearchApplicationByName(nameapp);
+                    foreach(var x in listApp)
+                    {
+                        Console.WriteLine(x.Name);
+                    }
+                }
+                Console.SetCursorPosition(24 + nameapp.Length, 1);
                 key = Console.ReadKey ();
                 if (key.Key == ConsoleKey.Escape) {
                     isExit = true;
                     break;
                 } else if (key.Key == ConsoleKey.Enter) {
-                    break;
+                    if(listApp.Count <= 0)
+                    {
+                        Console.Write("Not found!");
+                    }
+                    else
+                    {
+                        DisplayListApp(listApp);
+                        break;
+                    }
+                    
                 } else if (key.Key == ConsoleKey.Backspace) {
                     nameapp = nameapp.Remove (nameapp.Length - 1);
                 } else nameapp += key.KeyChar;
             }
             if (isExit == true) break;
-            Console.Write ("\nSearching...");
-            List<Application> listApp = new List<Application>();
-            try
-            {
-                listApp = AppBl.SearchApplicationByName (nameapp);
-            }catch{}
-            if (listApp.Count <= 0) {
-                Console.Clear ();
-                Console.WriteLine ("Search Fail!\nNot Found Application...\n");
-                Console.Write ("Press anykey to return...");
-                Console.ReadLine ();
-                break;
-            } else {
-                DisplayListApp (listApp);
-                break;
-            }
         }
     }
     void DisplayListApp (List<Application> listApp) {
@@ -257,6 +261,7 @@ public class Menu {
                             {
                                 App = app,
                                 User = userOnline,
+                                Payment = userOnline.ListPayment[ichoice-1],
                                 UnitPrice = app.Price
                             };
                             try

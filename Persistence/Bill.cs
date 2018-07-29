@@ -9,6 +9,7 @@ namespace Persistence
         public User User{get;set;}
         public double UnitPrice{get;set;}
         public DateTime DateCreate{get;set;}
+        public Payment Payment;
 
         public override bool Equals(object obj)
         {
@@ -17,7 +18,7 @@ namespace Persistence
         }
         public override int GetHashCode()
         {
-            return (Bill_ID + App.GetHashCode() + User.GetHashCode() + UnitPrice + DateCreate.GetHashCode()).GetHashCode();
+            return (Bill_ID + App.GetHashCode() + User.GetHashCode() + UnitPrice + DateCreate.GetHashCode() + Payment.GetHashCode()).GetHashCode();
         }
     }
 }

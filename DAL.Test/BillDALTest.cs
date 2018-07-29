@@ -25,6 +25,7 @@ namespace DAL.Test
             {
                 App = ApplicationDAL.GetApplicationById(3),
                 User = UserDAL.GetUserById(2),
+                Payment = PaymentDAL.GetPaymentById(2),
                 UnitPrice = ApplicationDAL.GetApplicationById(3).Price
             };
             Assert.True(CreateBill(bill));

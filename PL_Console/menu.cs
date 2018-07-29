@@ -135,13 +135,14 @@ public class Menu {
             List<Application> listApp = new List<Application>();
             while (true) {
                 Console.Clear ();
-                Console.WriteLine ("===Search Application===");
+                Console.WriteLine ("===Search Application===                                                press ESC to out");
                 Console.Write ("Enter Name Application: ");
                 Console.WriteLine (nameapp);
                 if(nameapp != "" && nameapp.Trim() != "")
                 {
-                    Console.WriteLine("\n------------------------");
                     listApp = AppBl.SearchApplicationByName(nameapp);
+                    if(listApp.Count > 0)
+                    Console.WriteLine("\n------------------------");
                     foreach(var x in listApp)
                     {
                         Console.WriteLine(x.Name);
@@ -156,6 +157,11 @@ public class Menu {
                     if(listApp.Count <= 0)
                     {
                         Console.Write("Not found!");
+                    }
+                    else if(listApp.Count == 1)
+                    {
+                        DisplayAnApp(listApp[0]);
+                        break;
                     }
                     else
                     {

@@ -135,7 +135,7 @@ public class Menu {
             List<Application> listApp = new List<Application>();
             while (true) {
                 Console.Clear ();
-                Console.WriteLine ("===Search Application===                                                press ESC to out");
+                Console.WriteLine ("===Search Application===");
                 Console.Write ("Enter Name Application: ");
                 Console.WriteLine (nameapp);
                 if(nameapp != "" && nameapp.Trim() != "")
@@ -170,6 +170,7 @@ public class Menu {
                     }
                     
                 } else if (key.Key == ConsoleKey.Backspace) {
+                    if(nameapp.Length > 0)
                     nameapp = nameapp.Remove (nameapp.Length - 1);
                 } else nameapp += key.KeyChar;
             }
@@ -202,6 +203,7 @@ public class Menu {
         while (true) {
             bool isExit = false;
             bool isOwn = false;
+            string size;
             Console.Clear ();
             Console.WriteLine ($"Application Name : {app.Name}");
             Console.WriteLine ($"Kind             : {app.Kind}");
@@ -209,7 +211,9 @@ public class Menu {
             Console.WriteLine ($"Publisher        : {app.Publisher}");
             Console.WriteLine ($"DatePublish      : {app.DatePublisher.Date.Day+"/"+app.DatePublisher.Date.Month+"/"+app.DatePublisher.Date.Year}");
             Console.WriteLine ($"Price            : {app.Price} VND");
-            Console.WriteLine ($"Size             : {app.Size} MB");
+            if(app.Size >= 100)size = (app.Size / 1000).ToString() + " GB";
+            else size = app.Size.ToString() + " MB";
+            Console.WriteLine ($"Size             : {size}");
             if(UserBl.GetApplicationBoughtByUserID(userOnline.User_ID).Contains(app))
             {
                 Console.WriteLine("\nThis Application has OWNER!");
@@ -322,6 +326,7 @@ public class Menu {
             Console.Write("0. Return\n\n#Choice : ");
             string choice = Console.ReadLine();
             int ichoice;
+            string size;
             if(int.TryParse(choice, out ichoice))
             {
                 if(ichoice == 0)break;
@@ -334,7 +339,9 @@ public class Menu {
                     Console.WriteLine ($"Publisher        : {listApp[ichoice-1].Publisher}");
                     Console.WriteLine ($"DatePublish      : {listApp[ichoice-1].DatePublisher.Date.Day+"/"+listApp[ichoice-1].DatePublisher.Date.Month+"/"+listApp[ichoice-1].DatePublisher.Date.Year}");
                     Console.WriteLine ($"Price            : {listApp[ichoice-1].Price} VND");
-                    Console.WriteLine ($"Size             : {listApp[ichoice-1].Size} MB");
+                    if(listApp[ichoice-1].Size >= 100)size = (listApp[ichoice-1].Size / 1000).ToString() + " GB";
+                     else size = listApp[ichoice-1].Size.ToString() + " MB";
+                     Console.WriteLine ($"Size             : {size}");
                 }
                 Console.Write("\nPress anykey to return...");
                 Console.ReadKey();
